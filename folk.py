@@ -389,12 +389,9 @@ while not S == ['\t']:
 
 print(S)
 UniqueDotExporter(root).to_picture("parsetree.png")
-<<<<<<< HEAD
-=======
 
 log.write("Parsing completed\n")
 log.close()
->>>>>>> e33b939d5b5bb20e1a5d0038b82685fb2e973eb1
 print("Done")
     
 
