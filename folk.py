@@ -201,7 +201,7 @@ for left, right in grammar.items():
 class ParseNode(NodeMixin):
     def __init__(self, name: str, parent=None, children=None):
         super(ParseNode, self).__init__()
-        self.name = 'hello'#name
+        self.name = name
         #print(" the child is {}".format(children))
         if children:
             #print("thus")
@@ -341,23 +341,22 @@ except StopIteration:
     print("Empty formula is not accepted")
     
 i = 0
-root = ParseNode(S[1])
+root = None#ParseNode(S[1])
 working_node = root
 
 while not S == ['\t']:
-    print(S[::-1])
+    #print(S[::-1])
     # Pop out the top element of the stack since it is not yet the end of file symbol
     top = S.pop()
-    print("attaching to {}".format(working_node.name))
     if top in T: # Either top is a terminal...
-        print("{} is in T".format(top))
+        #print("{} is in T".format(top))
         if top == c:
             # All is well so read in next symbol
             try:
                 c = next(f)
             except StopIteration:
                 if S == ['\t']:
-                    break
+                    pass
                 else:
                     log.write("Ran out of characters with stack as:\n\t")
                     log.write(S)
@@ -366,13 +365,13 @@ while not S == ['\t']:
             # add leaf to tree
             working_node = ParseNode(top, parent=working_node)
             # and then move back up to nearest incomplete ancestor
-            while working_node.isComplete():
+            while not working_node == None and working_node.isComplete():
                 working_node = working_node.parent
         else:
             log.write("Expected to see {} but formula contains {} instead\n".format(top, c))
             sys.exit(1)
     else: # Or a non-terminal.
-        print("{} is in N".format(top))
+        #print("{} is in N".format(top))
         rule = M[top][c]
         if rule == None: # No rule is defined for this
             log.write("Error: a {} cannot begin with {}\n".format(top, c))
@@ -383,15 +382,24 @@ while not S == ['\t']:
         # We add the new symbol to the tree
         # And since it is a non-terminal we recurse into it
         working_node = ParseNode(top, parent=working_node)
+        if working_node.is_root:
+            root = working_node
         working_node.rule = rule
         S.extend(rule[::-1])
     
+    
 
-print(S)
+#print(S)
 UniqueDotExporter(root).to_picture("parsetree.png")
 
-log.write("Parsing completed\n")
+log.write("Parsing completed successfully\n")
 log.close()
-print("Done")
+
+#from anytree.iterators import PreOrderIter
+#for n in PreOrderIter(root, filter_=lambda node: not node.isComplete()):
+#    print(n)
+#    print(n.name)
+#print("Done")
+#print(c)
     
 

@@ -1,0 +1,7 @@
+variables: w x y z
+constants: C D
+predicates: P[2] Q[1]
+equality: =
+connectives: \land \lor \implies \iff \neg
+quantifiers: \exists \forall
+formula: (x = C)
