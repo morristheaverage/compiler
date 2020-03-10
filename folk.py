@@ -380,19 +380,7 @@ while not S == ['\t']:
     
 
 print(S)
-<<<<<<< HEAD
-drawer = UniqueDotExporter(root)
-for line in drawer:
-    print(line)
-
-pic = open("parsetree.png", 'a')
-pic.close()
-drawer.to_picture("parsetree.png")
-=======
 UniqueDotExporter(root).to_picture("parsetree.png")
-
-
->>>>>>> 55696b6232cef608bb6bc173960f5a5df4470b29
 print("Done")
     
 
