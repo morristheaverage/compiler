@@ -7,7 +7,7 @@
 
 import sys
 import re
-from typing import List, Tuple, Set, Collection
+from typing import List, Tuple, Set
 from anytree import NodeMixin
 from anytree.exporter import UniqueDotExporter
 
