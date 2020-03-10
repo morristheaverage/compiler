@@ -380,13 +380,9 @@ while not S == ['\t']:
     
 
 print(S)
-UniqueDotExporter(root).to_dotfile("parsetree.dot")
+UniqueDotExporter(root).to_picture("parsetree.png")
 
-from graphviz import Source
-#Source.from_file('parsetree.dot')
 
-from graphviz import render
-#render('dot', 'png', 'parsetree.png')
 print("Done")
     
 
