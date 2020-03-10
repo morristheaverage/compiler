@@ -10,6 +10,7 @@ import re
 from typing import List, Tuple, Set
 from anytree import NodeMixin
 from anytree.exporter import UniqueDotExporter
+import datetime
 
 # The program expects one command line argument - the name of the file to be parsed
 if len(sys.argv) != 2:
@@ -18,6 +19,9 @@ if len(sys.argv) != 2:
 
 # Read the input file
 infile = sys.argv[1]
+
+log = open("folk.log", 'a')
+log.write("{} opened at {}\n".format(infile, datetime.datetime.now()))
 with open(infile) as f:
     tokens = f.read().split()
 
@@ -197,7 +201,7 @@ for left, right in grammar.items():
 class ParseNode(NodeMixin):
     def __init__(self, name: str, parent=None, children=None):
         super(ParseNode, self).__init__()
-        self.name = name
+        self.name = 'hello'#name
         #print(" the child is {}".format(children))
         if children:
             #print("thus")
@@ -355,23 +359,24 @@ while not S == ['\t']:
                 if S == ['\t']:
                     break
                 else:
-                    print("Ran out of characters with stack as:\n\t")
-                    print(S)
-                    break
+                    log.write("Ran out of characters with stack as:\n\t")
+                    log.write(S)
+                    log.write('\n')
+                    sys.exit(1)
             # add leaf to tree
             working_node = ParseNode(top, parent=working_node)
             # and then move back up to nearest incomplete ancestor
             while working_node.isComplete():
                 working_node = working_node.parent
         else:
-            print("Expected to see {} but formula contains {} instead".format(top, c))
-            break
+            log.write("Expected to see {} but formula contains {} instead\n".format(top, c))
+            sys.exit(1)
     else: # Or a non-terminal.
         print("{} is in N".format(top))
         rule = M[top][c]
         if rule == None: # No rule is defined for this
-            print("Error: a {} cannot begin with {}".format(top, c))
-            break
+            log.write("Error: a {} cannot begin with {}\n".format(top, c))
+            sys.exit(1)
         # If a valid rule is available add it to stack
         # We must reverse the list to do this
 
@@ -385,7 +390,8 @@ while not S == ['\t']:
 print(S)
 UniqueDotExporter(root).to_picture("parsetree.png")
 
-
+log.write("Parsing completed\n")
+log.close()
 print("Done")
     
 
