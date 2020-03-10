@@ -48,7 +48,7 @@ with open(infile) as f:
 
 
     # The sets of variable names, constants etc. must be disjoint
-    SymbolSet = Collection[str]
+    SymbolSet = List[str]
     def disjoint(sets: List[SymbolSet]) -> bool:
         checking_sets = [set(A) for A in sets]
         union = checking_sets[0]
