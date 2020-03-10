@@ -198,7 +198,7 @@ class ParseNode(NodeMixin):
     def __init__(self, name: str, parent=None, children=None):
         super(ParseNode, self).__init__()
         self.name = name
-        print(f" the child is {children}")
+        print(" the child is {}".format(children))
         if children:
             print("thus")
             self.children = tuple(children)
@@ -362,12 +362,12 @@ while not S == ['\t']:
             while working_node.isComplete():
                 working_node = working_node.parent
         else:
-            print(f"Expected to see {top} but formula contains {c} instead")
+            print("Expected to see {} but formula contains {} instead".format(top, c))
             break
     else: # Or a non-terminal.
         rule = M[top][c]
         if rule == None: # No rule is defined for this
-            print(f"Error: a {top} cannot begin with {c}")
+            print("Error: a {} cannot begin with {}".format(top, c))
             break
         # If a valid rule is available add it to stack
         # We must reverse the list to do this
