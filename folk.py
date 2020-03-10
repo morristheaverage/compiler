@@ -198,12 +198,12 @@ class ParseNode(NodeMixin):
     def __init__(self, name: str, parent=None, children=None):
         super(ParseNode, self).__init__()
         self.name = name
-        print(" the child is {}".format(children))
+        #print(" the child is {}".format(children))
         if children:
-            print("thus")
+            #print("thus")
             self.children = tuple(children)
         else:
-            print("hence")
+            #print("hence")
             self.children = tuple()
         self.parent = parent
         self.rule = [] # leaf nodes have no rule
@@ -344,7 +344,9 @@ while not S == ['\t']:
     print(S[::-1])
     # Pop out the top element of the stack since it is not yet the end of file symbol
     top = S.pop()
+    print("attaching to {}".format(working_node.name))
     if top in T: # Either top is a terminal...
+        print("{} is in T".format(top))
         if top == c:
             # All is well so read in next symbol
             try:
@@ -365,6 +367,7 @@ while not S == ['\t']:
             print("Expected to see {} but formula contains {} instead".format(top, c))
             break
     else: # Or a non-terminal.
+        print("{} is in N".format(top))
         rule = M[top][c]
         if rule == None: # No rule is defined for this
             print("Error: a {} cannot begin with {}".format(top, c))
